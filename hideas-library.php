@@ -10,3 +10,14 @@
  *
  * @package Hideas_Library
  */
+ 
+require __DIR__ . '/vendor/autoload.php';
+
+define('HIDEAS_LIBRARY_SYSTEM_FILE_PATH', __FILE__);
+define('HIDEAS_LIBRARY_VERSION_NUMBER', '1.0.0');
+
+add_action( 'plugins_loaded', 'hideas_library_init', 11);
+
+function hideas_library_init() {
+    \HideasLibrary\Init::init();
+}
