@@ -18,6 +18,8 @@ define('HIDEAS_LIBRARY_VERSION_NUMBER', '1.0.0');
 
 add_action( 'plugins_loaded', 'hideas_library_init', 11);
 
+register_activation_hook(__FILE__, [\HideasLibrary\Base\Activation::get_instance(), 'hideaslibrary_generate_hash_key']);
+
 function hideas_library_init() {
     \HideasLibrary\Init::init();
 }
