@@ -4,7 +4,7 @@ namespace HiDeasCallCentral\Base;
 
 class Activation {
     
-    public static function hideaslibrary_generate_hash_key() {
+    public static function hi_deas_call_central_generate_hash_key() {
         self::get_instance()->save_hash_key();
         flush_rewrite_rules();
     }

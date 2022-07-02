@@ -6,15 +6,24 @@ class Settings {
     
     public function __construct()
     {
+        $basename = plugin_basename(HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH);
+        $prefix = is_network_admin() ? 'network_admin_' : '';
         add_action('admin_menu', [$this, 'create_tools_submenu']);
         add_action( 'admin_init', [$this, 'register_settings'] );
         add_action( 'admin_enqueue_scripts', [$this, 'enqueue_scripts'] );
+        add_filter("{$prefix}plugin_action_links_$basename", [$this, 'add_settings_link'], 10, 4);
     }
     
+    /**
+     * Create a sub menu under settings
+     */
     public function create_tools_submenu() {
         add_submenu_page('options-general.php', 'Hi-Deas Call Central', 'Hi-Deas Call Central', 'manage_options',  'hi-deas-call-central', [$this, 'hideas_call_central_tools_content']);
     }
     
+    /**
+     * Render the content for the settings page
+     */
     public function hideas_call_central_tools_content() {
        $extension = esc_attr(get_option('hideasCallCentralExtension'));
        $phone = esc_attr(get_option('hideasCallCentralPhone'));
@@ -63,7 +72,6 @@ class Settings {
                   <select name="hideasCallCenterDisplayAs">
                     <option value="image" <?php selected('image', $display_as); ?>><?= __('Image', 'hi-deas-call-central') ?></option>
                     <option value="text" <?php selected('text', $display_as); ?>><?= __('Text', 'hi-deas-call-central') ?></option>
-                    <option value="widget" <?php selected('widget', $display_as); ?>><?= __('Widget', 'hi-deas-call-central') ?></option>
                   </select>
                   <p class="description"><?= __('Choose how to display the widget.', 'hi-deas-call-central') ?></p>
                 </td>
@@ -91,6 +99,10 @@ class Settings {
         <?php
     }
     
+    /**
+     * Register settings
+     *
+     */
     public function register_settings() {
         register_setting( 'hideas-call-center-group', 'hideasCallCentralExtension', [$this, 'sanitize_text_fields']);
         register_setting( 'hideas-call-center-group', 'hideasCallCentralPhone', [$this, 'sanitize_text_fields']);
@@ -99,19 +111,49 @@ class Settings {
         register_setting( 'hideas-call-center-group', 'hideasCallCentralPhoneText', [$this, 'sanitize_text_fields']);
     }
     
+    /**
+     * Sanitize fields input
+     *
+     * @param $input
+     * @return string
+     */
     public function sanitize_text_fields($input) {
       return sanitize_text_field($input);
     }
     
+    /**
+     * Sanitize URL
+     *
+     * @param $input
+     * @return string|null
+     */
     public function sanitize_url_fields($input) {
         return sanitize_url($input);
     }
     
+    /**
+     * Enqueue scripts
+     *
+     */
     public function enqueue_scripts() {
         $screen = get_current_screen();
         if (strpos($screen->id, 'settings_page_hi-deas-call-central') !== false) {
             wp_enqueue_script( 'hi-deas-call-central-admin-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/admin.js',['jquery'], HI_DEAS_CALL_CENTRAL_VERSION_NUMBER, true );
         }
+    }
+    
+    /**
+     * @param $links
+     */
+    public function add_settings_link($actions, $plugin_file, $plugin_data, $context) {
+      $url = menu_page_url('hi-deas-call-central', false);
+    
+        $custom_actions = array(
+            'hi-deas-call-central_settings' => sprintf('<a href="%s">%s</a>', $url, __('Settings', 'hi-deas-call-central')),
+        );
+    
+        // add the links to the front of the actions list
+        return array_merge($custom_actions, $actions);
     }
     
     
