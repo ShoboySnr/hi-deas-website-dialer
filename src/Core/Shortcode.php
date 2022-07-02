@@ -1,6 +1,6 @@
 <?php
 
-namespace HideasLibrary\Core;
+namespace HiDeasCallCentral\Core;
 
 class Shortcode {
     

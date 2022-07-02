@@ -1,6 +1,6 @@
 <?php
 
-namespace HideasLibrary\Base;
+namespace HiDeasCallCentral\Base;
 
 class Activation {
     

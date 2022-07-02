@@ -4,7 +4,13 @@
   "type": "wordpress-plugin",
   "autoload": {
     "psr-4": {
-      "HideasLibrary\\": "src/"
+      "HiDeasCallCentral\\": "src/"
+    }
+  },
+  "config": {
+    "vendor-dir": "lib",
+    "platform": {
+      "php": "8.0.0"
     }
   },
   "authors": [
