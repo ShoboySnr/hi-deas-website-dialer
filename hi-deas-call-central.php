@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Hideas Library
+ * Plugin Name: Hi-Deas Call Central
  * Plugin URI:  https://hideasng.com
- * Description: Hideas Library for Internet Calls.
+ * Description: Hi-Deas Call Central for Internet Calls.
  * Author:      Damilare Shobowale
  * Author URI:  https://www.techwithdee.com
  * Text Domain: hideas-library
@@ -13,8 +13,9 @@
  
 require __DIR__ . '/vendor/autoload.php';
 
-define('HIDEAS_LIBRARY_SYSTEM_FILE_PATH', __FILE__);
-define('HIDEAS_LIBRARY_VERSION_NUMBER', '1.0.0');
+define('HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH', __FILE__);
+define('HI_DEAS_CALL_CENTRAL_PLUGIN_URL', plugin_dir_url(HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH));
+define('HI_DEAS_CALL_CENTRAL_VERSION_NUMBER', '1.0.0');
 
 add_action( 'plugins_loaded', 'hideas_library_init', 11);
 
