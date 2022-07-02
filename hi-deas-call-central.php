@@ -11,7 +11,7 @@
  * @package Hideas_Library
  */
  
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/lib/autoload.php';
 
 define('HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH', __FILE__);
 define('HI_DEAS_CALL_CENTRAL_PLUGIN_URL', plugin_dir_url(HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH));

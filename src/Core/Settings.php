@@ -63,6 +63,7 @@ class Settings {
                   <select name="hideasCallCenterDisplayAs">
                     <option value="image" <?php selected('image', $display_as); ?>><?= __('Image', 'hi-deas-call-central') ?></option>
                     <option value="text" <?php selected('text', $display_as); ?>><?= __('Text', 'hi-deas-call-central') ?></option>
+                    <option value="widget" <?php selected('widget', $display_as); ?>><?= __('Widget', 'hi-deas-call-central') ?></option>
                   </select>
                   <p class="description"><?= __('Choose how to display the widget.', 'hi-deas-call-central') ?></p>
                 </td>
