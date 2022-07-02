@@ -3,9 +3,9 @@
  * Plugin Name: Hi-Deas Call Central
  * Plugin URI:  https://hideasng.com
  * Description: Hi-Deas Call Central for Internet Calls.
- * Author:      Damilare Shobowale
- * Author URI:  https://www.techwithdee.com
- * Text Domain: hideas-library
+ * Author:      Hi-Deas Call Central
+ * Author URI:  https://www.hideasng.com
+ * Text Domain: hi-deas-call-central
  * Version:     1.0.0
  *
  * @package Hideas_Library
