@@ -61,6 +61,11 @@ class Shortcode {
         return ob_get_clean();
     }
     
+    /**
+     * Add this function to the wp_footer hook if floating display type is chosen
+     *
+     * @return string|void
+     */
     public function embed_float_options() {
         $hash_key = get_option('hideasCallCenterHashedKey');
         $extension = get_option('hideasCallCentralExtension');
