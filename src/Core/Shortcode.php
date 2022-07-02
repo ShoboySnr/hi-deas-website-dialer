@@ -6,16 +6,25 @@ class Shortcode {
     
     public $shortcode = '[hi-deas-call-central]';
     
-    public $default_image_url = HI_DEAS_CALL_CENTRAL_IMAGE_PATH.'/phone-call.png';
+    private $default_image_url = HI_DEAS_CALL_CENTRAL_IMAGE_PATH.'/phone-call.png';
     
-    public $api_url = 'https://callcentral.hideasng.com/api/phone/dialer.php?action=call';
+    private $api_url = 'https://callcentral.hideasng.com/api/phone/dialer.php?action=call';
     
+    /**
+     * Constructor
+     *
+     */
     public function __construct() {
         add_shortcode('hi-deas-call-central', [$this, 'initialize_shortcode']);
         add_action( 'init', [$this, 'register_scripts'] );
         add_action( 'wp_enqueue_scripts', [$this, 'enqueue_scripts'] );
     }
     
+    /**
+     * Implement the shortcode
+     *
+     * @return false|string
+     */
     public function initialize_shortcode() {
         $hash_key = get_option('hideasCallCenterHashedKey');
         $extension = get_option('hideasCallCentralExtension');
@@ -52,10 +61,18 @@ class Shortcode {
     }
     
     
+    /**
+     * Register scripts before enqueueing
+     *
+     */
     public function register_scripts() {
         wp_register_script( 'hi-deas-call-central-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/hideas.js',['jquery'], HI_DEAS_CALL_CENTRAL_VERSION_NUMBER, true );
     }
     
+    /**
+     * Enqueue and localize scripts
+     *
+     */
     public function enqueue_scripts() {
         $hash_key = get_option('hideasCallCenterHashedKey');
         $extension = get_option('hideasCallCentralExtension');
@@ -70,7 +87,6 @@ class Shortcode {
             'call_url'                  => $call_url,
         ]);
     }
-    
     
     
     

@@ -7,6 +7,10 @@ define('HI_DEAS_CALL_CENTRAL_JS_PATH', HI_DEAS_CALL_CENTRAL_PLUGIN_URL.'assets/j
 
 class Init {
     
+    /**
+     * Initialize all classes here
+     *
+     */
     public static function init() {
         \HiDeasCallCentral\Core\Init::init_menu_types();
     }

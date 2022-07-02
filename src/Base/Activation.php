@@ -4,11 +4,19 @@ namespace HiDeasCallCentral\Base;
 
 class Activation {
     
+    /**
+     * Run upon activating the plugin
+     *
+     */
     public static function hi_deas_call_central_generate_hash_key() {
         self::get_instance()->save_hash_key();
         flush_rewrite_rules();
     }
     
+    /**
+     * Function to save newly generated hash key
+     *
+     */
     public function save_hash_key() {
         $saved_hash_key = get_option('hideasCallCenterHashedKey');
         if(empty($saved_hash_key)) {
@@ -18,6 +26,12 @@ class Activation {
     }
     
     
+    /**
+     * Generate unique random string
+     *
+     * @param int $length
+     * @return string
+     */
     public function generate_random($length = 64) {
         $random = '';
         srand( (double) microtime() * 1000000);

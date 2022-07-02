@@ -21,6 +21,10 @@ add_action( 'plugins_loaded', 'hi_deas_call_central_library_init', 11);
 
 register_activation_hook(__FILE__, [\HiDeasCallCentral\Base\Activation::get_instance(), 'hi_deas_call_central_generate_hash_key']);
 
+/**
+ * function to run when the plugin is loaded
+ *
+ */
 function hi_deas_call_central_library_init() {
     \HiDeasCallCentral\Init::init();
 }

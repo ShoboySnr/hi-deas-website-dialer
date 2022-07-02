@@ -143,7 +143,13 @@ class Settings {
     }
     
     /**
-     * @param $links
+     * Add link to settings in plugin actions
+     *
+     * @param $actions
+     * @param $plugin_file
+     * @param $plugin_data
+     * @param $context
+     * @return array
      */
     public function add_settings_link($actions, $plugin_file, $plugin_data, $context) {
       $url = menu_page_url('hi-deas-call-central', false);
