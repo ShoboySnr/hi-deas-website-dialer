@@ -69,7 +69,7 @@ class Settings {
               <tr valign="center">
                 <th scope="row"><?= __('Display as', 'hi-deas-call-central') ?></th>
                 <td>
-                  <select name="hideasCallCenterDisplayAs">
+                  <select name="hideasCallCenterDisplayAs" required>
                     <option value="image" <?php selected('image', $display_as); ?>><?= __('Image', 'hi-deas-call-central') ?></option>
                     <option value="text" <?php selected('text', $display_as); ?>><?= __('Text', 'hi-deas-call-central') ?></option>
                     <option value="floating" <?php selected('floating', $display_as); ?>><?= __('Floating', 'hi-deas-call-central') ?></option>
