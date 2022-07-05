@@ -7,16 +7,16 @@
         let display_as = event.target.value;
 
         if(display_as === 'text') {
-            $('#hideasCallCentralPhoneTextSelection').show();
-            $('#hideasCallCentralPhoneIconURLSelection').hide();
+            $('#HiDeasWebsiteDialerPhoneTextSelection').show();
+            $('#HiDeasWebsiteDialerPhoneIconURLSelection').hide();
         } else {
-            $('#hideasCallCentralPhoneTextSelection').hide();
-            $('#hideasCallCentralPhoneIconURLSelection').show();
+            $('#HiDeasWebsiteDialerPhoneTextSelection').hide();
+            $('#HiDeasWebsiteDialerPhoneIconURLSelection').show();
         }
     }
 
     hideasAdmin.init = () => {
-        $("select[name*='hideasCallCenterDisplayAs']").change(hideasAdmin.toggle_display_as).change();
+        $("select[name*='HiDeasWebsiteDialerDisplayAs']").change(hideasAdmin.toggle_display_as).change();
     }
 
     $(window).on('load', hideasAdmin.init);

@@ -15,7 +15,7 @@
     }
 
     hideas.init = () => {
-        $(document).on('click', 'a.hi-deas-call-central-container', hideas.open_window_call);
+        $(document).on('click', 'a.hi-deas-website-dialer-container', hideas.open_window_call);
     }
 
     $(window).on('load', hideas.init);

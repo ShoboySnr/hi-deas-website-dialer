@@ -1,12 +1,12 @@
 <?php
 
-namespace HiDeasCallCentral\Core;
+namespace HiDeasWebsiteDialer\Core;
 
 class Shortcode {
     
-    public $shortcode = '[hi-deas-call-central]';
+    public $shortcode = '[Hi-Deas-Website-Dailer]';
     
-    private $default_image_url = HI_DEAS_CALL_CENTRAL_IMAGE_PATH.'/phone-call.png';
+    private $default_image_url = HI_DEAS_CALL_CENTRAL_IMAGE_PATH.'/phone-call.jpeg';
     
     private $api_url = 'https://callcentral.hideasng.com/api/phone/dialer.php?action=call';
     
@@ -15,7 +15,7 @@ class Shortcode {
      *
      */
     public function __construct() {
-        add_shortcode('hi-deas-call-central', [$this, 'initialize_shortcode']);
+        add_shortcode('Hi-Deas-Website-Dailer', [$this, 'initialize_shortcode']);
         add_action( 'init', [$this, 'register_scripts'] );
         add_action( 'wp_enqueue_scripts', [$this, 'enqueue_scripts'] );
         add_action( 'wp_footer', [$this, 'embed_float_options']);
@@ -27,16 +27,16 @@ class Shortcode {
      * @return false|string
      */
     public function initialize_shortcode() {
-        $hash_key = get_option('hideasCallCenterHashedKey');
-        $extension = get_option('hideasCallCentralExtension');
-        $phone = get_option('hideasCallCentralExtension');
-        $image_url = get_option('hideasCallCentralPhoneIconURL');
-        $display_as = get_option('hideasCallCenterDisplayAs', 'image');
-        $phone_text = get_option('hideasCallCentralPhoneText');
+        $hash_key = get_option('HiDeasWebsiteDialerHashedKey');
+        $extension = get_option('HiDeasWebsiteDialerExtension');
+        $phone = get_option('HiDeasWebsiteDialerExtension');
+        $image_url = get_option('HiDeasWebsiteDialerPhoneIconURL');
+        $display_as = get_option('HiDeasWebsiteDialerDisplayAs', 'image');
+        $phone_text = get_option('HiDeasWebsiteDialerPhoneText');
         
         if(empty($extension) || empty($phone) || empty($hash_key) || $display_as == 'floating') return '';
         
-        if(empty($image_url)) $image_url = $this->default_image_url;
+        if(empty($image_url) || !file_exists($image_url)) $image_url = $this->default_image_url;
     
         $call_url = add_query_arg(['hash' => $hash_key, 'extension' => $extension, 'phone' => $phone], $this->api_url);
         
@@ -46,13 +46,17 @@ class Shortcode {
         ob_start();
         
         ?>
-        <a href="javascript:void(0)" class="hi-deas-call-central-container"><?= $display; ?></a>
-        <noscript><?= __('You need Javascript to use the previous link or use', 'hi-deas-call-central') ?>
+        <a href="javascript:void(0)" class="hi-deas-website-dialer-container"><?= $display; ?></a>
+        <noscript><?= __('You need Javascript to use the previous link or use', 'hi-deas-website-dialer') ?>
           <a href="<?= $call_url; ?>" target="_blank" ><?= $display; ?></a>
         </noscript>
         <style>
-          a.hi-deas-call-central-container {
+          a.hi-deas-website-dialer-container {
               display: inline;
+          }
+          a.hi-deas-website-dialer-container img {
+              height: 30px;
+              width: 30px;
           }
         </style>
 
@@ -67,15 +71,15 @@ class Shortcode {
      * @return string|void
      */
     public function embed_float_options() {
-        $hash_key = get_option('hideasCallCenterHashedKey');
-        $extension = get_option('hideasCallCentralExtension');
-        $phone = get_option('hideasCallCentralExtension');
-        $image_url = get_option('hideasCallCentralPhoneIconURL');
-        $display_as = get_option('hideasCallCenterDisplayAs', 'image');
+        $hash_key = get_option('HiDeasWebsiteDialerHashedKey');
+        $extension = get_option('HiDeasWebsiteDialerExtension');
+        $phone = get_option('HiDeasWebsiteDialerPhone');
+        $image_url = get_option('HiDeasWebsiteDialerPhoneIconURL');
+        $display_as = get_option('HiDeasWebsiteDialerDisplayAs', 'image');
     
         if(empty($extension) || empty($phone) || empty($hash_key) || $display_as !== 'floating') return '';
     
-        if(empty($image_url)) $image_url = $this->default_image_url;
+        if(empty($image_url) || !file_exists($image_url)) $image_url = $this->default_image_url;
     
         $call_url = add_query_arg(['hash' => $hash_key, 'extension' => $extension, 'phone' => $phone], $this->api_url);
     
@@ -84,19 +88,21 @@ class Shortcode {
         ob_start();
     
         ?>
-      <a href="javascript:void(0)" class="hi-deas-call-central-container"><?= $display; ?></a>
-      <noscript><?= __('You need Javascript to use the previous link or use', 'hi-deas-call-central') ?>
+      <a href="javascript:void(0)" class="hi-deas-website-dialer-container"><?= $display; ?></a>
+      <noscript><?= __('You need Javascript to use the previous link or use', 'hi-deas-website-dialer') ?>
         <a href="<?= $call_url; ?>" target="_blank" ><?= $display; ?></a>
       </noscript>
       <style>
-          a.hi-deas-call-central-container {
+          a.hi-deas-website-dialer-container {
               position: fixed;
               bottom: 40px;
               z-index: 999999999;
               right: 20px;
-              background-color: #ffffff;
               padding: 10px;
-              border-radius: 50%;
+          }
+          a.hi-deas-website-dialer-container img {
+              height: 90px;
+              width: 90px;
           }
       </style>
     
@@ -111,7 +117,7 @@ class Shortcode {
      *
      */
     public function register_scripts() {
-        wp_register_script( 'hi-deas-call-central-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/hideas.js',['jquery'], HI_DEAS_CALL_CENTRAL_VERSION_NUMBER, true );
+        wp_register_script( 'hi-deas-website-dialer-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/hideas.js',['jquery'], HI_DEAS_CALL_CENTRAL_VERSION_NUMBER, true );
     }
     
     /**
@@ -119,16 +125,16 @@ class Shortcode {
      *
      */
     public function enqueue_scripts() {
-        $hash_key = get_option('hideasCallCenterHashedKey');
-        $extension = get_option('hideasCallCentralExtension');
-        $phone = get_option('hideasCallCentralExtension');
+        $hash_key = get_option('HiDeasWebsiteDialerHashedKey');
+        $extension = get_option('HiDeasWebsiteDialerExtension');
+        $phone = get_option('HiDeasWebsiteDialerPhone');
         
         if(empty($extension) || empty($phone) || empty($hash_key)) return;
     
         $call_url = add_query_arg(['hash' => $hash_key, 'extension' => $extension, 'phone' => $phone], $this->api_url);
         
-        wp_enqueue_script( 'hi-deas-call-central-js' );
-        wp_localize_script('hi-deas-call-central-js', 'hiDeasCallCentral', [
+        wp_enqueue_script( 'hi-deas-website-dialer-js' );
+        wp_localize_script('hi-deas-website-dialer-js', 'hiDeasCallCentral', [
             'call_url'                  => $call_url,
         ]);
     }

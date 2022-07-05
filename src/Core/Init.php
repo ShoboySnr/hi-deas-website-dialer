@@ -1,6 +1,6 @@
 <?php
 
-namespace HiDeasCallCentral\Core;
+namespace HiDeasWebsiteDialer\Core;
 
 class Init {
     

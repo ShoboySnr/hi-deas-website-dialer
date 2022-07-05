@@ -6,5 +6,5 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'HiDeasCallCentral\\' => array($baseDir . '/src'),
+    'HiDeasWebsiteDialer\\' => array($baseDir . '/src'),
 );

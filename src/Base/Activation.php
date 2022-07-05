@@ -1,6 +1,6 @@
 <?php
 
-namespace HiDeasCallCentral\Base;
+namespace HiDeasWebsiteDialer\Base;
 
 class Activation {
     
@@ -18,10 +18,10 @@ class Activation {
      *
      */
     public function save_hash_key() {
-        $saved_hash_key = get_option('hideasCallCenterHashedKey');
+        $saved_hash_key = get_option('HiDeasWebsiteDialerHashedKey');
         if(empty($saved_hash_key)) {
             $generate_hash = self::get_instance()->generate_random();
-            update_option('hideasCallCenterHashedKey', $generate_hash);
+            update_option('HiDeasWebsiteDialerHashedKey', $generate_hash);
         }
     }
     

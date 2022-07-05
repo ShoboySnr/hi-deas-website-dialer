@@ -9,12 +9,12 @@ class ComposerStaticInite8d92bee2dbdffb50e5ccd96f4d988f0
     public static $prefixLengthsPsr4 = array (
         'H' => 
         array (
-            'HiDeasCallCentral\\' => 18,
+            'HiDeasWebsiteDialer\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'HiDeasCallCentral\\' => 
+        'HiDeasWebsiteDialer\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
