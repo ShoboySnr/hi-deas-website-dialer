@@ -19,5 +19,5 @@ Make your contact center a click away from your customers at toll free using Hi-
 
 ## Changelog
 
-### 1.0.2
+### 1.0.0
 - Initial Release
