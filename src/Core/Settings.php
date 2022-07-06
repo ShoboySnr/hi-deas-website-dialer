@@ -6,7 +6,7 @@ class Settings {
     
     public function __construct()
     {
-        $basename = plugin_basename(HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH);
+        $basename = plugin_basename(HI_DEAS_WEBSITE_DIALER_SYSTEM_FILE_PATH);
         $prefix = is_network_admin() ? 'network_admin_' : '';
         add_action('admin_menu', [$this, 'create_tools_submenu']);
         add_action( 'admin_init', [$this, 'register_settings'] );
@@ -139,7 +139,7 @@ class Settings {
     public function enqueue_scripts() {
         $screen = get_current_screen();
         if (strpos($screen->id, 'settings_page_hi-deas-website-dialer') !== false) {
-            wp_enqueue_script( 'hi-deas-website-dialer-admin-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/admin.js',['jquery'], HI_DEAS_CALL_CENTRAL_VERSION_NUMBER, true );
+            wp_enqueue_script( 'hi-deas-website-dialer-admin-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/admin.js',['jquery'], HI_DEAS_WEBSITE_DIALER_VERSION_NUMBER, true );
         }
     }
     

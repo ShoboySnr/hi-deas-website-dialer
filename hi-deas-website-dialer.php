@@ -13,9 +13,9 @@
  
 require __DIR__ . '/lib/autoload.php';
 
-define('HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH', __FILE__);
-define('HI_DEAS_CALL_CENTRAL_PLUGIN_URL', plugin_dir_url(HI_DEAS_CALL_CENTRAL_SYSTEM_FILE_PATH));
-define('HI_DEAS_CALL_CENTRAL_VERSION_NUMBER', '1.0.2');
+define('HI_DEAS_WEBSITE_DIALER_SYSTEM_FILE_PATH', __FILE__);
+define('HI_DEAS_WEBSITE_DIALER_PLUGIN_URL', plugin_dir_url(HI_DEAS_WEBSITE_DIALER_SYSTEM_FILE_PATH));
+define('HI_DEAS_WEBSITE_DIALER_VERSION_NUMBER', '1.0.2');
 
 add_action( 'plugins_loaded', 'hi_deas_call_central_library_init', 11);
 

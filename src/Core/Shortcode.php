@@ -4,7 +4,7 @@ namespace HiDeasWebsiteDialer\Core;
 
 class Shortcode {
     
-    public $shortcode = '[Hi-Deas-Website-Dailer]';
+    public $shortcode = '[Hi-Deas-Website-Dialer]';
     
     private $default_image_url = HI_DEAS_CALL_CENTRAL_IMAGE_PATH.'/phone-call.jpeg';
     
@@ -15,7 +15,7 @@ class Shortcode {
      *
      */
     public function __construct() {
-        add_shortcode('Hi-Deas-Website-Dailer', [$this, 'initialize_shortcode']);
+        add_shortcode('Hi-Deas-Website-Dialer', [$this, 'initialize_shortcode']);
         add_action( 'init', [$this, 'register_scripts'] );
         add_action( 'wp_enqueue_scripts', [$this, 'enqueue_scripts'] );
         add_action( 'wp_footer', [$this, 'embed_float_options']);
@@ -117,7 +117,7 @@ class Shortcode {
      *
      */
     public function register_scripts() {
-        wp_register_script( 'hi-deas-website-dialer-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/hideas.js',['jquery'], HI_DEAS_CALL_CENTRAL_VERSION_NUMBER, true );
+        wp_register_script( 'hi-deas-website-dialer-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/hideas.js',['jquery'], HI_DEAS_WEBSITE_DIALER_VERSION_NUMBER, true );
     }
     
     /**
