@@ -55,8 +55,8 @@ class Shortcode {
               display: inline;
           }
           a.hi-deas-website-dialer-container img {
-              height: 30px;
-              width: 30px;
+              height: auto;
+              width: auto;
           }
         </style>
 
