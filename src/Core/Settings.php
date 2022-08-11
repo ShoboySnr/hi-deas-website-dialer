@@ -28,67 +28,88 @@ class Settings {
        $extension = esc_attr(get_option('HiDeasWebsiteDialerExtension'));
        $phone = esc_attr(get_option('HiDeasWebsiteDialerPhone'));
        $hash_key = get_option('HiDeasWebsiteDialerHashedKey');
+       $selected_icon = get_option('HiDeasWebsiteDialerPhoneIconSelection', '1');
        $image_url = get_option('HiDeasWebsiteDialerPhoneIconURL');
        $display_as = esc_attr(get_option('HiDeasWebsiteDialerDisplayAs', 'image'));
        $phone_text = esc_attr(get_option('HiDeasWebsiteDialerPhoneText', 'Call Us'));
         ?>
         <div class="wrap" id="hideas-call-center">
-          <h1><?= __('Hi-Deas Website Dialer', 'hi-deas-website-dialer') ?></h1>
+          <h1><?php _e('Hi-Deas Website Dialer', 'hi-deas-website-dialer') ?></h1>
           <form action="options.php" method="post">
             <?php settings_fields( 'hideas-call-center-group' ); ?>
             <?php do_settings_sections( 'hideas-call-center-group' ); ?>
             <table class="form-table">
               <tr valign="center">
-                <th scope="row"><?= __('Shortcode', 'hi-deas-website-dialer') ?></th>
+                <th scope="row"><?php _e('Shortcode', 'hi-deas-website-dialer') ?></th>
                 <td>
-                    <input type="text" name="HiDeasWebsiteDialerShortcode" value="<?= Shortcode::get_instance()->shortcode ?>" class="regular-text" readonly disabled />
-                    <p class="description"><?= __('This is the shortcode you can copy and paste anywhere on your website', 'hi-deas-website-dialer') ?></p>
+                    <input type="text" name="HiDeasWebsiteDialerShortcode" value="<?php echo Shortcode::get_instance()->shortcode ?>" class="regular-text" readonly disabled />
+                    <p class="description"><?php _e('This is the shortcode you can copy and paste anywhere on your website', 'hi-deas-website-dialer') ?></p>
                 </td>
               </tr>
               
               <tr valign="center">
-                <th scope="row"><?= __('Extension', 'hi-deas-website-dialer') ?></th>
+                <th scope="row"><?php _e('Extension', 'hi-deas-website-dialer') ?></th>
                 <td>
-                  <input type="text" name="HiDeasWebsiteDialerExtension" value="<?= $extension ?>" class="regular-text" required />
-                  <p class="description"><?= __('Enter the Extension', 'hi-deas-website-dialer') ?></p>
+                  <input type="text" name="HiDeasWebsiteDialerExtension" value="<?php echo esc_attr($extension) ?>" class="regular-text" required />
+                  <p class="description"><?php _e('Enter the Extension', 'hi-deas-website-dialer') ?></p>
                 </td>
               </tr>
               <tr valign="center">
-                <th scope="row"><?= __('Phone', 'hi-deas-website-dialer') ?></th>
+                <th scope="row"><?php _e('Phone', 'hi-deas-website-dialer') ?></th>
                 <td>
-                  <input type="text" name="HiDeasWebsiteDialerPhone" value="<?= $phone ?>" class="regular-text" required/>
-                  <p class="description"><?= __('Enter the Phone', 'hi-deas-website-dialer') ?></p>
+                  <input type="text" name="HiDeasWebsiteDialerPhone" value="<?php echo esc_attr($phone) ?>" class="regular-text" required/>
+                  <p class="description"><?php _e('Enter the Phone', 'hi-deas-website-dialer') ?></p>
                 </td>
               </tr>
               <tr valign="center">
-                <th scope="row"><?= __('Hash Key', 'hi-deas-website-dialer') ?></th>
+                <th scope="row"><?php _e('Hash Key', 'hi-deas-website-dialer') ?></th>
                 <td>
-                  <h4><?= $hash_key ?></h4>
+                  <h4><?php echo esc_attr($hash_key); ?></h4>
                 </td>
               </tr>
               <tr valign="center">
-                <th scope="row"><?= __('Display as', 'hi-deas-website-dialer') ?></th>
+                <th scope="row"><?php _e('Display as', 'hi-deas-website-dialer') ?></th>
                 <td>
                   <select name="HiDeasWebsiteDialerDisplayAs" required>
-                    <option value="image" <?php selected('image', $display_as); ?>><?= __('Image', 'hi-deas-website-dialer') ?></option>
-                    <option value="text" <?php selected('text', $display_as); ?>><?= __('Text', 'hi-deas-website-dialer') ?></option>
-                    <option value="floating" <?php selected('floating', $display_as); ?>><?= __('Floating', 'hi-deas-website-dialer') ?></option>
+                    <option value="image" <?php selected('image', $display_as); ?>><?php _e('Image', 'hi-deas-website-dialer') ?></option>
+                    <option value="text" <?php selected('text', $display_as); ?>><?php _e('Text', 'hi-deas-website-dialer') ?></option>
+                    <option value="floating" <?php selected('floating', $display_as); ?>><?php _e('Floating', 'hi-deas-website-dialer') ?></option>
                   </select>
-                  <p class="description"><?= __('Choose how to display the widget.', 'hi-deas-website-dialer') ?></p>
+                  <p class="description"><?php _e('Choose how to display the widget.', 'hi-deas-website-dialer') ?></p>
                 </td>
               </tr>
-              <tr valign="center" id="HiDeasWebsiteDialerPhoneIconURLSelection" style="display: none">
-                <th scope="row"><?= __('Phone Icon URL', 'hi-deas-website-dialer') ?></th>
+              <tr valign="center" id="HiDeasWebsiteDialerPhoneIconSelection">
+                <th scope="row"><?php _e('Select Icon', 'hi-deas-website-dialer') ?></th>
                 <td>
-                  <input type="url" name="HiDeasWebsiteDialerPhoneIconURL" value="<?= $image_url ?>" class="regular-text" />
-                  <p class="description"><?= __('Paste Image path to display if any', 'hi-deas-website-dialer') ?></p>
+                    <?php
+                        foreach ($this->get_registered_icons() as $icon) {
+                    ?>
+                    <label for="<?php echo sprintf('HiDeasWebsiteDialerPhoneIconSelection-%s', esc_attr($icon['name'])); ?>" class="hi-deas-icons-group" style="display: flex;align-items: center;margin-bottom: 10px;">
+                      <input type="radio" id="<?php echo sprintf('HiDeasWebsiteDialerPhoneIconSelection-%s', esc_attr($icon['name'])); ?>" name="HiDeasWebsiteDialerPhoneIconSelection" class="" value="<?php echo esc_attr($icon['value']); ?>"  <?php checked($selected_icon, $icon['value']); ?> />
+                      <img src="<?php echo esc_attr($icon['path']); ?>" alt="icon" width="60px">
+                    </label>
+                   <?php
+                        }
+                   ?>
+                  <label for="HiDeasWebsiteDialerPhoneIconSelection-custom" style="display: flex;align-items: center;margin-bottom: 10px;">
+                    <input type="radio" id="HiDeasWebsiteDialerPhoneIconSelection-custom" name="HiDeasWebsiteDialerPhoneIconSelection" class="" value="custom" <?php checked($selected_icon, 'custom'); ?> />
+                    <?php _e('Upload Custom', 'hi-deas-website-dialer'); ?>
+                  </label>
+                  <p class="description"><?php _e('Select the icon to display', 'hi-deas-website-dialer') ?></p>
+                </td>
+              </tr>
+              <tr valign="center" id="HiDeasWebsiteDialerPhoneIconURLSelection" style="display: <?php echo esc_attr($selected_icon) == 'custom' ? 'block': 'none'; ?>">
+                <th scope="row"><?php _e('Phone Icon URL', 'hi-deas-website-dialer') ?></th>
+                <td>
+                  <input type="url" name="HiDeasWebsiteDialerPhoneIconURL" value="<?php echo esc_attr($image_url); ?>" class="regular-text" />
+                  <p class="description"><?php _e('Paste Image path if you choose custom', 'hi-deas-website-dialer') ?></p>
                 </td>
               </tr>
               <tr valign="center" id="HiDeasWebsiteDialerPhoneTextSelection" style="display: none">
-                <th scope="row"><?= __('Phone Text', 'hi-deas-website-dialer') ?></th>
+                <th scope="row"><?php _e('Phone Text', 'hi-deas-website-dialer') ?></th>
                 <td>
-                  <input type="text" name="HiDeasWebsiteDialerPhoneText" value="<?= $phone_text ?>" class="regular-text" />
-                  <p class="description"><?= __('Text to display', 'hi-deas-website-dialer') ?></p>
+                  <input type="text" name="HiDeasWebsiteDialerPhoneText" value="<?php echo esc_attr($phone_text); ?>" class="regular-text" />
+                  <p class="description"><?php _e('Text to display', 'hi-deas-website-dialer') ?></p>
                 </td>
               </tr>
             </table>
@@ -105,11 +126,12 @@ class Settings {
      *
      */
     public function register_settings() {
-        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerExtension', [$this, 'sanitize_text_fields']);
-        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerPhone', [$this, 'sanitize_text_fields']);
-        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerPhoneIconURL', [$this, 'sanitize_url_fields']);
-        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerDisplayAs', [$this, 'sanitize_text_fields']);
-        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerPhoneText', [$this, 'sanitize_text_fields']);
+        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerExtension', ['sanitize_callback' => [$this, 'sanitize_text_fields']]);
+        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerPhone', ['sanitize_callback' => [$this, 'sanitize_text_fields']]);
+        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerPhoneIconSelection', ['sanitize_callback' => [$this, 'sanitize_text_fields']]);
+        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerPhoneIconURL', ['sanitize_callback' => [$this, 'sanitize_url_fields']]);
+        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerDisplayAs', ['sanitize_callback' => [$this, 'sanitize_text_fields']]);
+        register_setting( 'hideas-call-center-group', 'HiDeasWebsiteDialerPhoneText', ['sanitize_callback' => [$this, 'sanitize_text_fields']]);
     }
     
     /**
@@ -141,6 +163,33 @@ class Settings {
         if (strpos($screen->id, 'settings_page_hi-deas-website-dialer') !== false) {
             wp_enqueue_script( 'hi-deas-website-dialer-admin-js', HI_DEAS_CALL_CENTRAL_JS_PATH . '/admin.js',['jquery'], HI_DEAS_WEBSITE_DIALER_VERSION_NUMBER, true );
         }
+    }
+    
+    
+    /**
+     * Get default rgistered icons
+     *
+     * @return array[]
+     */
+    public function get_registered_icons()
+    {
+      return [
+          [
+              'name'    => 'icon-1',
+              'value'   => 1,
+              'path'    => HI_DEAS_CALL_CENTRAL_IMAGE_PATH. '/phone-call.png'
+          ],
+          [
+              'name'    => 'icon-2',
+              'value'   => 2,
+              'path'    => HI_DEAS_CALL_CENTRAL_IMAGE_PATH. '/phone-call-2.png'
+          ],
+          [
+              'name'    => 'icon-3',
+              'value'   => 3,
+              'path'    => HI_DEAS_CALL_CENTRAL_IMAGE_PATH. '/phone-call-3.png'
+          ],
+      ];
     }
     
     /**

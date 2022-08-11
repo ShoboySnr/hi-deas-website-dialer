@@ -6,7 +6,7 @@ class Shortcode {
     
     public $shortcode = '[Hi-Deas-Website-Dialer]';
     
-    private $default_image_url = HI_DEAS_CALL_CENTRAL_IMAGE_PATH.'/phone-call.jpeg';
+    private $default_image_url = HI_DEAS_CALL_CENTRAL_IMAGE_PATH.'/phone-call.png';
     
     private $api_url = 'https://callcentral.hideasng.com/api/phone/dialer.php?action=call';
     
@@ -30,25 +30,29 @@ class Shortcode {
         $hash_key = get_option('HiDeasWebsiteDialerHashedKey');
         $extension = get_option('HiDeasWebsiteDialerExtension');
         $phone = get_option('HiDeasWebsiteDialerExtension');
-        $image_url = get_option('HiDeasWebsiteDialerPhoneIconURL');
+        $image_icon = get_option('HiDeasWebsiteDialerPhoneIconSelection');
         $display_as = get_option('HiDeasWebsiteDialerDisplayAs', 'image');
         $phone_text = get_option('HiDeasWebsiteDialerPhoneText');
+    
+        $image_url = $this->find_icon_selected($image_icon);
+        if($image_icon == 'custom') {
+            $image_url = get_option('HiDeasWebsiteDialerPhoneIconURL');
+        }
         
         if(empty($extension) || empty($phone) || empty($hash_key) || $display_as == 'floating') return '';
         
-        if(empty($image_url) || !file_exists($image_url)) $image_url = $this->default_image_url;
+        if(empty($image_url)) $image_url = $this->default_image_url;
     
         $call_url = add_query_arg(['hash' => $hash_key, 'extension' => $extension, 'phone' => $phone], $this->api_url);
-        
         $display = '<img src="'. $image_url .'" alt="" />';
         if($display_as == 'text') $display = $phone_text;
         
         ob_start();
         
         ?>
-        <a href="javascript:void(0)" class="hi-deas-website-dialer-container"><?= $display; ?></a>
-        <noscript><?= __('You need Javascript to use the previous link or use', 'hi-deas-website-dialer') ?>
-          <a href="<?= $call_url; ?>" target="_blank" ><?= $display; ?></a>
+        <a href="javascript:void(0)" class="hi-deas-website-dialer-container"><?php echo $display; ?></a>
+        <noscript><?php _e('You need Javascript to use the previous link or use', 'hi-deas-website-dialer') ?>
+          <a href="<?php echo $call_url; ?>" target="_blank" ><?php echo $display; ?></a>
         </noscript>
         <style>
           a.hi-deas-website-dialer-container {
@@ -65,6 +69,23 @@ class Shortcode {
         return ob_get_clean();
     }
     
+    
+    /**
+     * Find the icon selected
+     *
+     * @param $icon_value
+     * @return mixed|string
+     */
+    public function find_icon_selected($icon_value) {
+      foreach (Settings::get_instance()->get_registered_icons() as $icon) {
+        if($icon['value'] == $icon_value) {
+          return $icon['path'];
+        }
+      }
+      
+      return '';
+    }
+    
     /**
      * Add this function to the wp_footer hook if floating display type is chosen
      *
@@ -74,12 +95,18 @@ class Shortcode {
         $hash_key = get_option('HiDeasWebsiteDialerHashedKey');
         $extension = get_option('HiDeasWebsiteDialerExtension');
         $phone = get_option('HiDeasWebsiteDialerPhone');
-        $image_url = get_option('HiDeasWebsiteDialerPhoneIconURL');
+        $image_icon = get_option('HiDeasWebsiteDialerPhoneIconSelection');
         $display_as = get_option('HiDeasWebsiteDialerDisplayAs', 'image');
+    
+        $image_url = $this->find_icon_selected($image_icon);
+        if($image_icon == 'custom') {
+            $image_url = get_option('HiDeasWebsiteDialerPhoneIconURL');
+        }
+        
     
         if(empty($extension) || empty($phone) || empty($hash_key) || $display_as !== 'floating') return '';
     
-        if(empty($image_url) || !file_exists($image_url)) $image_url = $this->default_image_url;
+        if(empty($image_url)) $image_url = $this->default_image_url;
     
         $call_url = add_query_arg(['hash' => $hash_key, 'extension' => $extension, 'phone' => $phone], $this->api_url);
     
@@ -88,9 +115,9 @@ class Shortcode {
         ob_start();
     
         ?>
-      <a href="javascript:void(0)" class="hi-deas-website-dialer-container"><?= $display; ?></a>
-      <noscript><?= __('You need Javascript to use the previous link or use', 'hi-deas-website-dialer') ?>
-        <a href="<?= $call_url; ?>" target="_blank" ><?= $display; ?></a>
+      <a href="javascript:void(0)" class="hi-deas-website-dialer-container"><?php echo $display; ?></a>
+      <noscript><?php _e('You need Javascript to use the previous link or use', 'hi-deas-website-dialer') ?>
+        <a href="<?php echo esc_attr($call_url); ?>" target="_blank" ><?php echo $display; ?></a>
       </noscript>
       <style>
           a.hi-deas-website-dialer-container {

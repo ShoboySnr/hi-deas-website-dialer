@@ -1,11 +1,11 @@
 === Hi-Deas Website Dialer ===
 Contributors: shoboysnr, hideasng
 Donate link: https://www.hideasng.com/dialer
-Tags: voip, dialer, customer, business
+Tags: website dailer, voip, dialer, website, customer, business
 Requires at least: 4.7
-Tested up to: 5.4
+Tested up to: 6.0.1
 Stable tag: 1.0.0
-Requires PHP: 7.0
+Requires PHP: 7.4
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
